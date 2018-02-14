@@ -1,0 +1,23 @@
+[
+  {
+    "company_name": "株式会社A",
+    "phone_number": "0310002000",
+    "contact_name": "山田",
+    "industry_name": "システム開発",
+    "remarks": "特になし"
+  },
+  {
+    "company_name": "株式会社B",
+    "phone_number": "0310002001",
+    "contact_name": "山本",
+    "industry_name": "システム開発",
+    "remarks": "特になし"
+  },
+  {
+    "company_name": "株式会社C",
+    "phone_number": "0310002002",
+    "contact_name": "山下",
+    "industry_name": "システム開発",
+    "remarks": "特になし"
+  }
+]

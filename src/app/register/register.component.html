@@ -1,0 +1,62 @@
+<app-title [title]="'ブラックリスト登録'"></app-title>
+<form class="mx-auto" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <!-- 企業名 -->
+  <div class="col-sm-6 my-1 mx-auto">
+    <label class="sr-only" for="register_company-name">企業名</label>
+    <div class="input-group">
+      <div class="input-addon input-group-prepend">
+        <div class="input-group-text w-100">企業名</div>
+      </div>
+      <input type="text" class="form-control" id="register_company-name" formControlName="company-name" (blur)="focusout('company-name')"
+        required placeholder="例) オールスマート">
+    </div>
+    <div *ngIf="companyNameError" class="alert alert-danger">{{companyNameError}}</div>
+  </div>
+  <!-- 電話番号 -->
+  <div class="col-sm-6 my-1 mx-auto">
+    <label class="sr-only" for="register_phone-number">電話番号</label>
+    <div class="input-group">
+      <div class="input-addon input-group-prepend">
+        <div class="input-group-text w-100">電話番号</div>
+      </div>
+      <input type="text" class="form-control" id="register_phone-number" formControlName="phone-number" (blur)="focusout('phone-number')"
+        placeholder="例) 0364412475">
+    </div>
+  </div>
+  <!-- 担当者名 -->
+  <div class="col-sm-6 my-1 mx-auto">
+    <label class="sr-only" for="register_contact-name">担当者名</label>
+    <div class="input-group">
+      <div class="input-addon input-group-prepend">
+        <div class="input-group-text w-100">担当者名</div>
+      </div>
+      <input type="text" class="form-control" id="register_contact-name" formControlName="contact-name" placeholder="例) 森 大夢">
+    </div>
+  </div>
+  <!-- 業種名 -->
+  <div class="col-sm-6 my-1 mx-auto">
+    <label class="sr-only" for="register_industry-name">業種名</label>
+    <div class="input-group">
+      <div class="input-addon input-group-prepend">
+        <div class="input-group-text w-100">業種名</div>
+      </div>
+      <input type="text" class="form-control" id="register_industry-name" formControlName="industry-name" placeholder="例) システム開発">
+    </div>
+  </div>
+  <!-- 備考 -->
+  <div class="col-sm-6 my-1 mx-auto">
+    <label class="sr-only" for="register_remarks">備考</label>
+    <div class="input-group">
+      <div class="input-addon input-group-prepend">
+        <div class="input-group-text w-100">備考</div>
+      </div>
+      <textarea class="form-control" rows="5" id="register_remarks" formControlName="remarks"></textarea>
+    </div>
+  </div>
+  <div class="col-sm-6 mx-auto button-position">
+    <!-- 登録ボタン -->
+    <button type="submit" class="btn btn-success">登録</button>
+    <!-- 取消ボタン -->
+    <button type="reset" (click)="reset()" class="btn btn-danger">取消</button>
+  </div>
+</form>
