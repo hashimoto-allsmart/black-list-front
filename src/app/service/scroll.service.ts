@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Injectable()
 export class ScrollService {
@@ -12,30 +12,28 @@ export class ScrollService {
     private scrollService: ScrollToService
   ) { }
 
-  /** 
+  /**
    * ページ切り替え時に自動スクロール
    */
   async initScrollTop() {
-    if (!isPlatformBrowser(this.platformId)) { return; }
     await this.router.events.toPromise();
-    this.scrollService.scrollTo({ offset: 0 });
+    await this.scrollTop();
   }
 
   /**
-   * スクロール(オフセット指定)
-   * @param offset オフセット
+   * 一番上へスクロール
    */
-  scrollToOffset(offset: number) {
+  async scrollTop() {
     if (!isPlatformBrowser(this.platformId)) { return; }
-    this.scrollService.scrollTo({ offset: offset });
+    await this.scrollService.scrollTo({ container: document.body } as ScrollToConfigOptions).toPromise();
   }
 
   /**
-   * スクロール(ID指定)
+   * スクロール(タグID指定)
    * @param target ターゲットID
    */
-  scrollToTarget(target: string) {
+  async scrollToTarget(target: string) {
     if (!isPlatformBrowser(this.platformId)) { return; }
-    this.scrollService.scrollTo({ target: target });
+    await this.scrollService.scrollTo({ target: target }).toPromise();
   }
 }

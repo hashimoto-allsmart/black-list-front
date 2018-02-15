@@ -10,8 +10,6 @@ import { ScrollService } from '../service/scroll.service';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnChanges {
-  /** 表示状態 */
-  view = false;
   /** 詳細情報 */
   @Input()
   data: BlackListData;
@@ -44,10 +42,13 @@ export class DetailComponent implements OnChanges {
     this.detailForm.controls['remarks'].setValue(this.data.remarks);
     const target = this.element.nativeElement;
     this.scrollService.scrollToTarget('app-detail');
-    this.view = true;
   }
 
   onCancel() {
     this.cancel.emit();
+  }
+
+  onSubmit() {
+    console.log('submit');
   }
 }

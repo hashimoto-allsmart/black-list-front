@@ -79,8 +79,8 @@ export class SearchComponent implements OnInit {
   /**
    * 編集キャンセルイベント
    */
-  onCancel() {
-    this.scrollService.scrollToOffset(0);
+  async onCancel() {
+    await this.scrollService.scrollTop();
     this.detailView = false;
   }
 }
