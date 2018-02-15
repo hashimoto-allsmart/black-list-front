@@ -14,6 +14,7 @@ import { BlackListService } from './service/black-list.service';
 import { StrageService } from './service/strage.service';
 import { DetailComponent } from './detail/detail.component';
 import { ScrollService } from './service/scroll.service';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 const appRoutes: Routes = [
   { path: 'home', component: SearchComponent },
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
     ),
     ReactiveFormsModule,
     HttpClientModule,
+    ScrollToModule.forRoot(),
     BrowserModule
   ],
   providers: [

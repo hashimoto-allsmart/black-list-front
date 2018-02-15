@@ -80,7 +80,7 @@ export class SearchComponent implements OnInit {
    * 編集キャンセルイベント
    */
   onCancel() {
-    this.scrollService.scrollTo(0, 0);
+    this.scrollService.scrollToOffset(0);
     this.detailView = false;
   }
 }

@@ -43,7 +43,7 @@ export class DetailComponent implements OnChanges {
     this.detailForm.controls['industry-name'].setValue(this.data.industry_name);
     this.detailForm.controls['remarks'].setValue(this.data.remarks);
     const target = this.element.nativeElement;
-    this.scrollService.scrollTo(target.offsetLeft, target.offsetTop);
+    this.scrollService.scrollToTarget('app-detail');
     this.view = true;
   }
 
