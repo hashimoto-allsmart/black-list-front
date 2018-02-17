@@ -1,3 +1,15 @@
+// アニメーション時に先に表示されてしまう為、透過設定
+.modal-content {
+  background: rgba(255,0,0,0);
+}
+// modal-contentの背景を透過にした為、個別に白に設定
+.modal-body {
+  background: white;
+}
+// modal-contentの背景を透過にした為、個別に白に設定
+.modal-footer {
+  background: white;
+}
 .info .modal-header {
   background-color: #17a2b8;
   color: white;

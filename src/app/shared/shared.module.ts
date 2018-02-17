@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InputFormComponent } from './form/input-form/input-form.component';
 import { TitleComponent } from './title/title.component';
@@ -21,6 +22,7 @@ import { DialogService } from './service/dialog/dialog.service';
     ReactiveFormsModule,
     ScrollToModule.forRoot(),
     HttpClientModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     InputFormComponent,
