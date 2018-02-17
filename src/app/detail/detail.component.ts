@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Renderer2, ElementRef, Output, EventEmitter } from '@angular/core';
-import { BlackListData } from '../type/type';
+import { BlackListData } from '../shared/type/type';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ScrollService } from '../service/scroll.service';
+import { ScrollService } from '../shared/service/scroll/scroll.service';
+import { DialogService } from '../shared/service/dialog/dialog.service';
 
 @Component({
   selector: 'app-detail',
@@ -22,7 +23,8 @@ export class DetailComponent implements OnChanges {
     public fb: FormBuilder,
     public element: ElementRef,
     // public renderer: Renderer2,
-    public scrollService: ScrollService
+    public scrollService: ScrollService,
+    public dialogService: DialogService
   ) {
     // フォームグループの登録
     this.detailForm = this.fb.group({
@@ -48,7 +50,13 @@ export class DetailComponent implements OnChanges {
     this.cancel.emit();
   }
 
-  onSubmit() {
-    console.log('submit');
+  async onSubmit() {
+    // 確認ダイアログ起動
+    const result = await this.dialogService.confirm('確認', ['更新しますか?']);
+    // いいえの場合は何もしない
+    if (!result) { return; }
+    // 登録API起動
+    // 完了ダイアログ起動
+    await this.dialogService.complete('完了', ['更新が完了しました。']);
   }
 }

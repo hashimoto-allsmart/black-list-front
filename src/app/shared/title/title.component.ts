@@ -9,11 +9,11 @@ export class TitleComponent implements OnInit {
 
   /** タイトル */
   @Input()
-  title: string;
+  title = '';
 
+  /** コンストラクタ */
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  /** 初期処理 */
+  ngOnInit() { }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BlackListData } from '../type/type';
+import { BlackListData } from '../../type/type';
 
 @Injectable()
 export class BlackListService {

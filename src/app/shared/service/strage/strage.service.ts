@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { STRAGE_KEY, StrageData, } from '../type/type';
+import { STRAGE_KEY, StrageData, } from '../../type/type';
 
 @Injectable()
 export class StrageService {

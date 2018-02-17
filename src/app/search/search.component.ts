@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { BlackListService } from '../service/black-list.service';
-import { BlackListData, STRAGE_KEY } from '../type/type';
-import { StrageService } from '../service/strage.service';
+import { BlackListService } from '../shared/service/api/black-list.service';
+import { BlackListData, STRAGE_KEY } from '../shared/type/type';
+import { StrageService } from '../shared/service/strage/strage.service';
 import { DetailComponent } from '../detail/detail.component';
 import { ViewChild } from '@angular/core/src/metadata/di';
-import { ScrollService } from '../service/scroll.service';
+import { ScrollService } from '../shared/service/scroll/scroll.service';
+import { DialogService } from '../shared/service/dialog/dialog.service';
 
 @Component({
   selector: 'app-search',
@@ -28,7 +29,8 @@ export class SearchComponent implements OnInit {
     public fb: FormBuilder,
     public blackListService: BlackListService,
     public strageService: StrageService,
-    public scrollService: ScrollService
+    public scrollService: ScrollService,
+    public dialogService: DialogService
   ) { }
 
   /**
@@ -73,14 +75,18 @@ export class SearchComponent implements OnInit {
    * 削除ボタン押下
    * @param index テーブルインデックス
    */
-  onDelite(index: number) {
+  async onDelite(index: number) {
+    // 削除確認ダイアログを表示
+    const resutl = await this.dialogService.alart('確認', ['削除しますか?']);
   }
 
   /**
    * 編集キャンセルイベント
    */
   async onCancel() {
+    // 一番上までスクロール
     await this.scrollService.scrollTop();
+    // 詳細画面を非表示
     this.detailView = false;
   }
 }
