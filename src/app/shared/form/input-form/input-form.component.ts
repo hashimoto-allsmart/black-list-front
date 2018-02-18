@@ -22,6 +22,7 @@ export class InputFormComponent implements OnInit, ControlValueAccessor {
   /** 非表示 */
   disabled: boolean;
 
+  /** エラーメッセージの表示有無 */
   errorDisplay = false;
 
   /** 変更検知時の外部へ通知 */

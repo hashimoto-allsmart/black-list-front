@@ -24,6 +24,10 @@ export class SearchComponent implements OnInit {
   detailView = false;
   /** 詳細情報 */
   detailData: BlackListData;
+  /** ページ */
+  page = 1;
+  /** リスト件数 */
+  collectionSize = 0;
 
   constructor(
     public fb: FormBuilder,
@@ -54,6 +58,10 @@ export class SearchComponent implements OnInit {
   async onSearch() {
     // ブラックリストの取得
     this.blackList = await this.blackListService.search();
+    // リスト数の更新
+    this.collectionSize = this.blackList.length;
+    // ページ表示位置を初期化
+    this.page = 1;
     // セッションへ保存
     this.strageService.save(STRAGE_KEY.SEARCH, { data: this.blackList });
     // テーブルの表示
@@ -77,7 +85,11 @@ export class SearchComponent implements OnInit {
    */
   async onDelite(index: number) {
     // 削除確認ダイアログを表示
-    const resutl = await this.dialogService.alart('確認', ['削除しますか?']);
+    const result = await this.dialogService.alart('確認', ['削除しますか?']);
+    // いいえの場合は何もしない
+    if (!result) { return; }
+    // 完了ダイアログ起動
+    await this.dialogService.complete('完了', ['削除が完了しました。']);
   }
 
   /**
