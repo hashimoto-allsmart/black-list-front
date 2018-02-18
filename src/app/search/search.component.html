@@ -5,33 +5,35 @@
   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
 </form>
 <br>
-<table *ngIf="tableView" class="table table-hover table-sm">
-  <thead class="thead-dark">
-    <tr>
-      <th class="text-center">詳細</th>
-      <th class="text-center">企業名</th>
-      <th class="text-center">電話番号</th>
-      <th class="text-center">担当者名</th>
-      <th class="text-center">業種名</th>
-      <th class="text-center">削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of blackList; let i = index">
-      <!-- <td class="text-center">{{i+1}}</td> -->
-      <td class="text-center">
-        <button type="button" class="btn btn-info oi" data-glyph="spreadsheet" title="spreadsheet" aria-hidden="true" (click)="onDetail(i)"></button>
-      </td>
-      <td class="text-center">{{row.company_name}}</td>
-      <td class="text-center">{{row.phone_number}}</td>
-      <td class="text-center">{{row.contact_name}}</td>
-      <td class="text-center">{{row.industry_name}}</td>
-      <td class="text-center">
-        <button type="button" class="btn btn-danger oi" data-glyph="trash" title="trash" aria-hidden="true" (click)="onDelite(i)"></button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
-  [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+<div *ngIf="tableView">
+  <table class="table table-hover table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th class="text-center">詳細</th>
+        <th class="text-center">企業名</th>
+        <th class="text-center">電話番号</th>
+        <th class="text-center">担当者名</th>
+        <th class="text-center">業種名</th>
+        <th class="text-center">削除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of blackList; let i = index">
+        <!-- <td class="text-center">{{i+1}}</td> -->
+        <td class="text-center">
+          <button type="button" class="btn btn-info oi" data-glyph="spreadsheet" title="spreadsheet" aria-hidden="true" (click)="onDetail(i)"></button>
+        </td>
+        <td class="text-center">{{row.company_name}}</td>
+        <td class="text-center">{{row.phone_number}}</td>
+        <td class="text-center">{{row.contact_name}}</td>
+        <td class="text-center">{{row.industry_name}}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-danger oi" data-glyph="trash" title="trash" aria-hidden="true" (click)="onDelite(i)"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
+    [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+</div>
 <app-detail id="app-detail" *ngIf="detailView" [data]="detailData" (cancel)="onCancel()"></app-detail>

@@ -50,6 +50,7 @@ export class SearchComponent implements OnInit {
     if (!strage) { return; }
     this.blackList = strage.data;
     this.tableView = true;
+    this.collectionSize = this.blackList.length;
   }
 
   /**
