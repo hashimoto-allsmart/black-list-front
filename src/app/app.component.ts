@@ -7,4 +7,6 @@ import { tick } from '@angular/core/testing';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  /** ナビバーの折りたたみ状態 */
+  isNavbarCollapsed = true;
 }
