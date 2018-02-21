@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" routerLink="{{data.brand.link}}" (click)="closeNavbar()">{{data.brand.label}}</a>
+  <button class="navbar-toggler hidden-sm-up" type="button" (click)="changeNavbarCollapsed()" aria-controls="collapsing_bavbar"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="isNavbarCollapsed" class="navbar-collapse" id="collapsing_bavbar">
+    <ul class="nav navbar-nav mr-auto">
+      <div *ngFor="let item of data.items;">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="{{item.link}}" (click)="changeNavbarCollapsed()">{{item.label}}</a>
+        </li>
+      </div>
+    </ul>
+  </div>
+</nav>

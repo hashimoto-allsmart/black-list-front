@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BlackListService } from '../shared/service/api/black-list.service';
-import { BlackListData, STRAGE_KEY } from '../shared/type/type';
+import { BlackListData, STRAGE_KEY, ThItem, TdItem, TableClickEvent } from '../shared/type/type';
 import { StrageService } from '../shared/service/strage/strage.service';
 import { DetailComponent } from '../detail/detail.component';
 import { ViewChild } from '@angular/core/src/metadata/di';
@@ -28,7 +28,33 @@ export class SearchComponent implements OnInit {
   page = 1;
   /** リスト件数 */
   collectionSize = 0;
+  /** テーブルヘッダ */
+  thItems = [
+    { label: '詳細' },
+    { label: '企業名' },
+    { label: '電話番号' },
+    { label: '担当者名' },
+    { label: '業種名' },
+    { label: '削除' }
+  ] as ThItem[];
+  /** テーブルデータ */
+  tdItems = [
+    { icon: { title: 'spreadsheet', buttonAttribute: { class: 'btn-info' } } },
+    { path: 'company_name' },
+    { path: 'phone_number' },
+    { path: 'contact_name' },
+    { path: 'industry_name' },
+    { icon: { title: 'trash', buttonAttribute: { class: 'btn-danger' } } }
+  ] as TdItem[];
 
+  /**
+   * コンストラクタ
+   * @param fb フォームビルダー
+   * @param blackListService ブラックリストサービス
+   * @param strageService ストレージサービス
+   * @param scrollService スクロールサービス
+   * @param dialogService ダイアログサービス
+   */
   constructor(
     public fb: FormBuilder,
     public blackListService: BlackListService,
@@ -37,9 +63,7 @@ export class SearchComponent implements OnInit {
     public dialogService: DialogService
   ) { }
 
-  /**
-   * 初期表示
-   */
+  /** 初期表示 */
   ngOnInit() {
     // フォームグループの登録
     this.searchForm = this.fb.group({
@@ -53,9 +77,7 @@ export class SearchComponent implements OnInit {
     this.collectionSize = this.blackList.length;
   }
 
-  /**
-   * 検索ボタン押下
-   */
+  /** 検索ボタン押下 */
   async onSearch() {
     // ブラックリストの取得
     this.blackList = await this.blackListService.search();
@@ -70,21 +92,30 @@ export class SearchComponent implements OnInit {
   }
 
   /**
-   * 詳細ボタン押下
-   * @param index テーブルインデックス
+   * テーブルボタンクリックイベント受信
+   * @param event テーブルボタンクリックイベント
    */
-  onDetail(index: number) {
+  onClick(event: TableClickEvent) {
+    if (event.item.label === '詳細') { this.onDetail(event.row); return; }
+    if (event.item.label === '削除') { this.onDelite(event.row); return; }
+  }
+
+  /**
+   * 詳細ボタン押下
+   * @param row 行データ
+   */
+  onDetail(row: any) {
     // 詳細情報コンポネントへのインプット情報設定
-    this.detailData = this.blackList[index];
+    this.detailData = row;
     // 詳細画面表示
     this.detailView = true;
   }
 
   /**
    * 削除ボタン押下
-   * @param index テーブルインデックス
+   * @param row 行データ
    */
-  async onDelite(index: number) {
+  async onDelite(row: any) {
     // 削除確認ダイアログを表示
     const result = await this.dialogService.alart('確認', ['削除しますか?']);
     // いいえの場合は何もしない
@@ -93,9 +124,7 @@ export class SearchComponent implements OnInit {
     await this.dialogService.complete('完了', ['削除が完了しました。']);
   }
 
-  /**
-   * 編集キャンセルイベント
-   */
+  /** 編集キャンセルイベント */
   async onCancel() {
     // 一番上までスクロール
     await this.scrollService.scrollTop();

@@ -19,8 +19,6 @@ import { AppRouterModule } from './app-routing.module';
     DetailComponent
   ],
   imports: [
-    NgbModule.forRoot(),
-    AppRouterModule,
     BrowserModule,
     SharedModule
   ],

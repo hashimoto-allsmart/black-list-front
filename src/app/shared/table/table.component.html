@@ -1,0 +1,19 @@
+<table class="table table-hover table-sm table-responsive-sm">
+  <thead class="thead-dark">
+    <tr>
+      <ng-container *ngFor="let item of thItems; let i = index">
+        <th class="text-center">{{item.label}}</th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows; let rowIndex = index">
+      <ng-container *ngFor="let item of tdItems; let colIndex = index">
+        <td *ngIf="item.path" class="text-center">{{getJsonData(item.path, row)}}</td>
+        <td *ngIf="item.icon" class="text-center">
+          <button type="button" class='btn oi' [attr.data-glyph]="item.icon.title" title="item.icon.title" aria-hidden="true" (click)="onClick(rowIndex, colIndex, row)"></button>
+        </td>
+      </ng-container>
+    </tr>
+  </tbody>
+</table>

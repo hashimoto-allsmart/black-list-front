@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { tick } from '@angular/core/testing';
+import { NavBarData } from './shared/type/type';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,12 @@ import { tick } from '@angular/core/testing';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  /** ナビバーの折りたたみ状態 */
-  isNavbarCollapsed = true;
+  // ナビゲーションバー情報
+  navData = {
+    brand: { label: 'ブラックリスト', link: 'search' },
+    items: [
+      { label: '検索', link: 'search' },
+      { label: '登録', link: 'register' }
+    ]
+  } as NavBarData;
 }
