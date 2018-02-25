@@ -10,10 +10,10 @@
   <div *ngIf="blackList.length === 0" class="not-applicable">条件に該当するデータはありません。</div>
   <div *ngIf="blackList.length">
     <!-- テーブル -->
-    <app-table [rows]="blackList" [thItems]="thItems" [tdItems]="tdItems" (buttonClick)="onClick($event)"></app-table>
+    <app-table [rows]="rows" [thItems]="thItems" [tdItems]="tdItems" (buttonClick)="onClick($event)"></app-table>
     <!-- ページャ -->
     <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
-      [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+      [ellipses]="false" [boundaryLinks]="true" (pageChange)="onPager($event)"></ngb-pagination>
   </div>
 </div>
 <!-- 詳細画面 -->

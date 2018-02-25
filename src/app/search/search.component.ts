@@ -18,6 +18,8 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   /** 検索条件 */
   keyWord = '';
+  /** 表示するリスト */
+  rows = [] as BlackListData[];
   /** ブラックリスト */
   blackList = [] as BlackListData[];
   /** テーブル表示 */
@@ -91,6 +93,8 @@ export class SearchComponent implements OnInit {
     this.collectionSize = this.blackList.length;
     // ページ表示位置を初期化
     this.page = 1;
+    // 表示用に切り出し
+    this.rows = this.blackList.slice(0, 10);
     // セッションへ保存
     this.strageService.save(STRAGE_KEY.SEARCH, { data: keyWord });
     // テーブルの表示
@@ -152,5 +156,14 @@ export class SearchComponent implements OnInit {
     this.detailView = false;
     // 再検索
     this.onSearch();
+  }
+
+  /**
+   * ページャー操作
+   * @param page 変更後のページ 
+   */
+  onPager(page: number) {
+    // 表示するリストを変更
+    this.rows = this.blackList.slice(((page - 1) * 10), ((page) * 10));
   }
 }
