@@ -42,7 +42,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit() { }
 
   /** リセット */
-  reset() { this.errorDisplay = false; }
+  reset() {
+    // 一旦trueにしてからfalseに変更
+    this.errorDisplay = true;
+    this.errorDisplay = false;
+  }
 
   /** 登録 */
   async onSubmit() {
