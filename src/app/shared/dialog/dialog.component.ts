@@ -39,11 +39,18 @@ export class DialogComponent implements OnInit {
   /** キャンセルボタン表示有無/ラベル */
   cancel = { display: true, label: '' };
 
+  /**
+   * コンストラクタ
+   * @param activeModal モデル
+   */
   constructor(public activeModal: NgbActiveModal) { }
 
+  /** 初期処理 */
   ngOnInit() { }
 
+  /** OKボタンクリック */
   onClickOkey() { this.activeModal.close(true); }
 
+  /** キャンセル */
   onClickCancel() { this.activeModal.close(false); }
 }

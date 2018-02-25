@@ -13,10 +13,11 @@ export class NavBarComponent implements OnInit {
   /** ナビバーの折りたたみ状態 */
   isNavbarCollapsed = true;
 
+  /** コンストラクタ */
   constructor() { }
 
-  ngOnInit() {
-  }
+  /** 初期処理 */
+  ngOnInit() { }
 
   /** 折りたたみ状態変更 */
   changeNavbarCollapsed() { this.isNavbarCollapsed = !this.isNavbarCollapsed; }

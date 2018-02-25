@@ -4,6 +4,7 @@ import { STRAGE_KEY, StrageData, } from '../../type/type';
 @Injectable()
 export class StrageService {
 
+  /** コンストラクタ */
   constructor() { }
 
   /**

@@ -30,8 +30,7 @@ export class TableComponent implements OnInit, AfterViewChecked {
   ) { }
 
   /** 初期処理 */
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   /** HTMLテンプレート作成後処理 */
   ngAfterViewChecked() {

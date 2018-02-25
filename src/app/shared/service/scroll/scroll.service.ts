@@ -6,6 +6,12 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 @Injectable()
 export class ScrollService {
 
+  /**
+   * コンストラクタ
+   * @param platformId プラットフォームID
+   * @param router ルーター
+   * @param scrollService スクロールサービス
+   */
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
