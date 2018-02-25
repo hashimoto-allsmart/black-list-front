@@ -1,3 +1,5 @@
-<div [style.visibility]="isErrorDisplay() ? 'visible' : 'hidden'" class="app-form-error-massege">
-  {{errorMessage}}
+<div class="app-form-error-box">
+  <div [@state] *ngIf="isDisplay" class="app-form-error-massege">
+    {{getErrorMessage()}}
+  </div>
 </div>

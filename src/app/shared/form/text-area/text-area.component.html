@@ -4,8 +4,8 @@
     <div class="app-form-addon input-group-prepend">
       <div class="input-group-text w-100">{{label}}</div>
     </div>
-    <textarea class="form-control" rows="5" (input)="onChange($event.target.value)" (blur)="onTouched()" [placeholder]="placeholder"
+    <textarea class="form-control" rows="5" (input)="onChange($event.target.value)" (blur)="onBlur()" [placeholder]="placeholder"
       [disabled]="disabled" #textarea></textarea>
   </div>
-  <app-form-error [isDisplay]="errorDisplay" [controlDir]="controlDir"></app-form-error>
+  <app-form-error [controlDir]="controlDir"></app-form-error>
 </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,7 @@ import { ScrollService } from './service/scroll/scroll.service';
 import { StrageService } from './service/strage/strage.service';
 import { DialogService } from './service/dialog/dialog.service';
 import { TableComponent } from './table/table.component';
+import { HttpInterceptorService } from './service/api/http-interceptor.service';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { TableComponent } from './table/table.component';
   ],
   providers: [
     BlackListService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
     ScrollService,
     StrageService,
     DialogService

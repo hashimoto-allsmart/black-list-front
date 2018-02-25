@@ -3,9 +3,9 @@
 <!-- フォーム -->
 <form class="mx-auto" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <!-- 企業名 -->
-  <app-input-form [label]="'企業名*'" [placeholder]="'例) オールスマート'" formControlName="company-name"></app-input-form>
+  <app-input-form [errorDisplay]="errorDisplay" [label]="'企業名*'" [placeholder]="'例) オールスマート'" formControlName="company-name"></app-input-form>
   <!-- 電話番号 -->
-  <app-input-form [label]="'電話番号*'" [placeholder]="'例) 0364412475'" formControlName="phone-number"></app-input-form>
+  <app-input-form [errorDisplay]="errorDisplay" [label]="'電話番号*'" [placeholder]="'例) 0364412475'" formControlName="phone-number"></app-input-form>
   <!-- 担当者名 -->
   <app-input-form [label]="'担当者名'" [placeholder]="'例) 森 大夢'" formControlName="contact-name"></app-input-form>
   <!-- 業種名 -->

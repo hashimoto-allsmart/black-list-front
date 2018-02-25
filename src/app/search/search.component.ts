@@ -16,8 +16,10 @@ import { DialogService } from '../shared/service/dialog/dialog.service';
 export class SearchComponent implements OnInit {
   /** フォーム */
   searchForm: FormGroup;
+  /** 検索条件 */
+  keyWord = '';
   /** ブラックリスト */
-  blackList: BlackListData[];
+  blackList = [] as BlackListData[];
   /** テーブル表示 */
   tableView = false;
   /** 詳細情報表示 */
@@ -43,7 +45,7 @@ export class SearchComponent implements OnInit {
     { path: 'company_name' },
     { path: 'phone_number' },
     { path: 'contact_name' },
-    { path: 'industry_name' },
+    { path: 'industry' },
     { icon: { title: 'trash', buttonAttribute: { class: 'btn-danger' } } }
   ] as TdItem[];
 
@@ -66,27 +68,31 @@ export class SearchComponent implements OnInit {
   /** 初期表示 */
   ngOnInit() {
     // フォームグループの登録
-    this.searchForm = this.fb.group({
-      'keyword': ''
-    });
+    this.searchForm = this.fb.group({ 'keyword': '' });
     // セッションから復旧
     const strage = this.strageService.fetch(STRAGE_KEY.SEARCH);
+    // セッションにデータがない場合は処理終了
     if (!strage) { return; }
-    this.blackList = strage.data;
-    this.tableView = true;
-    this.collectionSize = this.blackList.length;
+    // 検索条件を取得
+    const keyWord = strage.data;
+    // フォームに再設定
+    this.searchForm.controls['keyword'].setValue(keyWord);
+    // 検索
+    this.onSearch();
   }
 
   /** 検索ボタン押下 */
   async onSearch() {
+    // 検索ボックスからキーワードを取得
+    const keyWord = this.searchForm.controls['keyword'].value;
     // ブラックリストの取得
-    this.blackList = await this.blackListService.search();
+    this.blackList = await this.blackListService.search(keyWord);
     // リスト数の更新
     this.collectionSize = this.blackList.length;
     // ページ表示位置を初期化
     this.page = 1;
     // セッションへ保存
-    this.strageService.save(STRAGE_KEY.SEARCH, { data: this.blackList });
+    this.strageService.save(STRAGE_KEY.SEARCH, { data: keyWord });
     // テーブルの表示
     this.tableView = true;
   }
@@ -115,13 +121,19 @@ export class SearchComponent implements OnInit {
    * 削除ボタン押下
    * @param row 行データ
    */
-  async onDelite(row: any) {
+  async onDelite(row: BlackListData) {
     // 削除確認ダイアログを表示
     const result = await this.dialogService.alart('確認', ['削除しますか?']);
     // いいえの場合は何もしない
     if (!result) { return; }
+    // 削除API起動
+    const ret = await this.blackListService.delete(row.id);
+    // エラーの場合はエラーダイアログ表示
+    if (!ret) { await this.dialogService.error('削除異常', ['ブラックリストの削除に失敗しました。']); return; }
     // 完了ダイアログ起動
     await this.dialogService.complete('完了', ['削除が完了しました。']);
+    // 再検索
+    this.onSearch();
   }
 
   /** 編集キャンセルイベント */
@@ -130,5 +142,15 @@ export class SearchComponent implements OnInit {
     await this.scrollService.scrollTop();
     // 詳細画面を非表示
     this.detailView = false;
+  }
+
+  /** 編集完了通知 */
+  async onComplete() {
+    // 一番上までスクロール
+    await this.scrollService.scrollTop();
+    // 詳細画面を非表示
+    this.detailView = false;
+    // 再検索
+    this.onSearch();
   }
 }

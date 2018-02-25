@@ -2,16 +2,19 @@
 <app-title id="black-list-search_top" [title]="'ブラックリスト検索'"></app-title>
 <!-- 検索フォーム -->
 <form class="mx-auto form-inline col-sm-6 my-1" [formGroup]="searchForm" (ngSubmit)="onSearch()">
-  <input class="form-control col-sm-10 mr-sm-2" type="text" placeholder="電話番号、企業名、etc...">
+  <input class="form-control col-sm-10 mr-sm-2" formControlName="keyword" type="text" placeholder="電話番号、企業名、etc...">
   <button class="btn btn-outline-success my-2 my-sm-2" type="submit">検索</button>
 </form>
 <br>
 <div *ngIf="tableView">
-  <!-- テーブル -->
-  <app-table [rows]="blackList" [thItems]="thItems" [tdItems]="tdItems" (buttonClick)="onClick($event)"></app-table>
-  <!-- ページャ -->
-  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
-    [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+  <div *ngIf="blackList.length === 0" class="not-applicable">条件に該当するデータはありません。</div>
+  <div *ngIf="blackList.length">
+    <!-- テーブル -->
+    <app-table [rows]="blackList" [thItems]="thItems" [tdItems]="tdItems" (buttonClick)="onClick($event)"></app-table>
+    <!-- ページャ -->
+    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [rotate]="true"
+      [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+  </div>
 </div>
 <!-- 詳細画面 -->
-<app-detail id="app-detail" *ngIf="detailView" [data]="detailData" (cancel)="onCancel()"></app-detail>
+<app-detail id="app-detail" *ngIf="detailView" [data]="detailData" (cancel)="onCancel()" (complete)="onComplete()"></app-detail>

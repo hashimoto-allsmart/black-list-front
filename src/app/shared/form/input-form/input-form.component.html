@@ -7,5 +7,5 @@
     <input type="text" class="form-control" (input)="onChange($event.target.value)" (blur)="onBlur()" [placeholder]="placeholder"
       [disabled]="disabled" #input>
   </div>
-  <app-form-error [isDisplay]="errorDisplay" [controlDir]="controlDir"></app-form-error>
+  <app-form-error [controlDir]="controlDir"></app-form-error>
 </div>

@@ -1,15 +1,19 @@
-import { Component, OnInit, Self, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Self, Input, ViewChild, ElementRef, Renderer2, OnChanges } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-input-form',
   templateUrl: './input-form.component.html',
   styleUrls: ['./input-form.component.scss', '../form.scss']
 })
-export class InputFormComponent implements OnInit, ControlValueAccessor {
+export class InputFormComponent implements OnInit, OnChanges, ControlValueAccessor {
 
   /** input */
   @ViewChild('input') input: ElementRef;
+
+  /** form-error */
+  @ViewChild(FormErrorComponent) formError: FormErrorComponent;
 
   /** ラベル */
   @Input()
@@ -19,11 +23,12 @@ export class InputFormComponent implements OnInit, ControlValueAccessor {
   @Input()
   placeholder = '';
 
+  /** フォーム入力以外でエラーを表示するか */
+  @Input()
+  errorDisplay = false;
+
   /** 非表示 */
   disabled: boolean;
-
-  /** エラーメッセージの表示有無 */
-  errorDisplay = false;
 
   /** 変更検知時の外部へ通知 */
   onChangeCallback = (value: any): void => { };
@@ -34,8 +39,23 @@ export class InputFormComponent implements OnInit, ControlValueAccessor {
   /**
    * コンストラクタ
    * @param controlDir FormControlオブジェクト
+   * @param renderer レンダリングサービス
+   * @param el 自コンポネントの要素
    */
-  constructor(@Self() public controlDir: NgControl) { controlDir.valueAccessor = this; }
+  constructor(
+    @Self() public controlDir: NgControl,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
+    // 自身を登録
+    controlDir.valueAccessor = this;
+  }
+
+  /** 変更検知 */
+  ngOnChanges() {
+    if (this.errorDisplay) { this.formError.errorDisplay(); return; }
+    this.formError.errorHide();
+  }
 
   /** 初期処理 */
   ngOnInit() {
@@ -51,8 +71,8 @@ export class InputFormComponent implements OnInit, ControlValueAccessor {
 
   /** フォーカスアウトイベント */
   onBlur() {
-    // エラーメッセージを表示
-    this.errorDisplay = true;
+    // エラーの場合はエラーメッセージを表示
+    if (this.formError.isError()) { this.formError.errorDisplay() };
     // コールバック起動
     this.onTouchedCallback();
   }
@@ -63,7 +83,7 @@ export class InputFormComponent implements OnInit, ControlValueAccessor {
    */
   onChange(value: any) {
     // エラーメッセージを非表示
-    this.errorDisplay = false;
+    this.formError.errorHide();
     // コールバック起動
     this.onChangeCallback(value);
   }

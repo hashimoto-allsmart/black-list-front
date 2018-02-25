@@ -1,11 +1,12 @@
 // ********** ブラックリスト ********** //
 /** ブラックリストデータ */
 export interface BlackListData {
-  company_name: string;   // 企業名
-  phone_number: string;   // 電話番号
-  contact_name: string;   // 担当者名
-  industry_name: string;  // 業種名
-  remarks: string;        // 備考
+  id?: string;             // ID
+  company_name?: string;   // 企業名
+  phone_number?: string;   // 電話番号
+  contact_name?: string;   // 担当者名
+  industry?: string;       // 業種名
+  remarks?: string;        // 備考
 }
 
 // ********** ストレージ ********** //
@@ -33,12 +34,12 @@ export interface NavBarData {
 // ********** テーブル ********** //
 /** セルの条件 */
 export interface CellAttribute {
-  class?: string;
-  id?: string;
+  class?: string; // classに指定する文字列
+  id?: string;    // idに指定する文字列
 }
 /** アイコン要素 */
 export interface IconItem {
-  title: string;                // タイトル(Iconic)
+  title: string;                    // タイトル(Iconic)
   buttonAttribute?: CellAttribute;  // ボタンのクラス(bootstrap4)
 }
 /** テーブルヘッダ要素 */

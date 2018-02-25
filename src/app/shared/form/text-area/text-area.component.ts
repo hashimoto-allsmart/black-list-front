@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-text-area',
@@ -10,6 +11,9 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
 
   /** textarea */
   @ViewChild('textarea') textarea: ElementRef;
+
+  /** error */
+  @ViewChild(FormErrorComponent) formError: FormErrorComponent;
 
   /** ラベル */
   @Input()
@@ -22,11 +26,11 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
   /** 非表示 */
   disabled: boolean;
 
-  /** 変更検知 */
-  onChange = (value: any): void => { };
+  /** 変更検知時の外部へ通知 */
+  onChangeCallback = (value: any): void => { };
 
-  /** フォーカスアウト検知 */
-  onTouched = (value: any): void => { };
+  /** フォーカスアウト時の外部への通知 */
+  onTouchedCallback = (): void => { };
 
   /**
    * コンストラクタ
@@ -46,14 +50,33 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
     control.updateValueAndValidity();
   }
 
+  /** フォーカスアウトイベント */
+  onBlur() {
+    // エラーの場合はエラーメッセージを表示
+    if (this.formError.isError()) { this.formError.errorDisplay() };
+    // コールバック起動
+    this.onTouchedCallback();
+  }
+
+  /**
+   * 値変更イベント
+   * @param value 変更された値
+   */
+  onChange(value: any) {
+    // エラーメッセージを非表示
+    this.formError.errorHide();
+    // コールバック起動
+    this.onChangeCallback(value);
+  }
+
   // ControlValueAccessorの実装メソッド
   writeValue(obj: any) { this.textarea.nativeElement.value = obj; }
 
   // ControlValueAccessorの実装メソッド
-  registerOnChange(fn: any) { this.onChange = fn; }
+  registerOnChange(fn: any) { this.onChangeCallback = fn; }
 
   // ControlValueAccessorの実装メソッド
-  registerOnTouched(fn: any) { this.onTouched = fn; }
+  registerOnTouched(fn: any) { this.onTouchedCallback = fn; }
 
   // ControlValueAccessorの実装メソッド
   setDisabledState(isDisabled: boolean) { this.disabled = isDisabled; }

@@ -81,4 +81,29 @@ export class DialogService {
     // ダイアログ範囲外のクリックイベントの受け方がわからないため、暫定的にtry-catchで対処
     try { return await modalRef.result; } catch (err) { return false; }
   }
+
+  /**
+   * エラーダイアログ
+   * @param title タイトル
+   * @param messages メッセージ
+   */
+  async error(title: string, messages: string[]) {
+    // ダイアログのオプション
+    const option = {} as NgbModalOptions;
+    // タイトルの背景色を設定
+    option.windowClass = 'alart';
+    // ダイアログオープン
+    const modalRef = this.modalService.open(DialogComponent, option);
+    // タイトルを設定
+    modalRef.componentInstance.title = title;
+    // メッセージを設定
+    modalRef.componentInstance.messages = messages;
+    // OKボタンのラベルを設定
+    modalRef.componentInstance.okey.label = 'OK';
+    // キャンセルボタンを非表示
+    modalRef.componentInstance.cancel.display = false;
+    // 結果を返却
+    // ダイアログ範囲外のクリックイベントの受け方がわからないため、暫定的にtry-catchで対処
+    try { return await modalRef.result; } catch (err) { return false; }
+  }
 }

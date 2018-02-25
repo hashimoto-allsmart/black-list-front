@@ -1,6 +1,7 @@
 // アニメーション時に先に表示されてしまう為、透過設定
 .modal-content {
   background: rgba(255,0,0,0);
+  border-style: none;
 }
 // modal-contentの背景を透過にした為、個別に白に設定
 .modal-body {
