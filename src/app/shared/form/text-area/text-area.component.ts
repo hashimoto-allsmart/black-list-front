@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Self } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Self, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
 
@@ -36,7 +36,7 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
    * コンストラクタ
    * @param controlDir FormControlオブジェクト
    */
-  constructor(@Self() public controlDir: NgControl) { controlDir.valueAccessor = this; }
+  constructor(@Optional() @Self() public controlDir: NgControl) { controlDir.valueAccessor = this; }
 
   /** 初期処理 */
   ngOnInit() {

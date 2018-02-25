@@ -42,11 +42,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() { }
 
   /** リセット */
-  reset() {
-    // 一旦trueにしてからfalseに変更
-    this.errorDisplay = true;
-    this.errorDisplay = false;
-  }
+  reset() { }
 
   /** 登録 */
   async onSubmit() {
@@ -74,10 +70,10 @@ export class RegisterComponent implements OnInit {
     // 完了ダイアログ起動
     await this.dialogService.complete('完了', ['登録が完了しました。']);
     // インプットパラメータ初期化
-    this.registerForm.controls['company-name'].setValue('');
-    this.registerForm.controls['phone-number'].setValue('');
-    this.registerForm.controls['contact-name'].setValue('');
-    this.registerForm.controls['industry-name'].setValue('');
-    this.registerForm.controls['remarks'].setValue('');
+    this.registerForm.controls['company-name'].reset();
+    this.registerForm.controls['phone-number'].reset();
+    this.registerForm.controls['contact-name'].reset();
+    this.registerForm.controls['industry-name'].reset();
+    this.registerForm.controls['remarks'].reset();
   }
 }

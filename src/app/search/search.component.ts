@@ -84,7 +84,7 @@ export class SearchComponent implements OnInit {
   }
 
   /** 検索ボタン押下 */
-  async onSearch() {
+  async onSearch(page?: number) {
     // 検索ボックスからキーワードを取得
     const keyWord = this.searchForm.controls['keyword'].value;
     // ブラックリストの取得
@@ -92,9 +92,9 @@ export class SearchComponent implements OnInit {
     // リスト数の更新
     this.collectionSize = this.blackList.length;
     // ページ表示位置を初期化
-    this.page = 1;
+    this.page = page ? page : 1;
     // 表示用に切り出し
-    this.rows = this.blackList.slice(0, 10);
+    this.rows = this.getRows(this.page);
     // セッションへ保存
     this.strageService.save(STRAGE_KEY.SEARCH, { data: keyWord });
     // テーブルの表示
@@ -155,15 +155,25 @@ export class SearchComponent implements OnInit {
     // 詳細画面を非表示
     this.detailView = false;
     // 再検索
-    this.onSearch();
+    this.onSearch(this.page);
   }
+
+  /**
+   * リスト取得
+   * @param page ページ
+   */
+  getRows(page: number) { return this.blackList.slice(((page - 1) * 10), ((page) * 10)); }
 
   /**
    * ページャー操作
    * @param page 変更後のページ 
    */
-  onPager(page: number) {
+  async onPager(page: number) {
+    // 一番上までスクロール
+    await this.scrollService.scrollTop();
+    // 詳細画面を非表示
+    this.detailView = false;
     // 表示するリストを変更
-    this.rows = this.blackList.slice(((page - 1) * 10), ((page) * 10));
+    this.rows = this.getRows(page);
   }
 }

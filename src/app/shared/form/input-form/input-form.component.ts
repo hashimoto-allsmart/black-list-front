@@ -1,4 +1,4 @@
-import { Component, OnInit, Self, Input, ViewChild, ElementRef, Renderer2, OnChanges } from '@angular/core';
+import { Component, OnInit, Self, Input, ViewChild, ElementRef, Renderer2, OnChanges, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
 
@@ -43,7 +43,8 @@ export class InputFormComponent implements OnInit, OnChanges, ControlValueAccess
    * @param el 自コンポネントの要素
    */
   constructor(
-    @Self() public controlDir: NgControl,
+    // https://stackoverflow.com/questions/47886424/error-in-no-provider-for-ngcontrol-angular-aot?rq=1
+    @Optional() @Self() public controlDir: NgControl,
     private renderer: Renderer2,
     private el: ElementRef
   ) {
