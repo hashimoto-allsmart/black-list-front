@@ -13,10 +13,9 @@ import { DetailComponent } from './detail/detail.component';
 import { SharedModule } from './shared/shared.module';
 
 const appRoutes: Routes = [
-  { path: 'home', component: SearchComponent },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'search',
     pathMatch: 'full'
   },
   { path: 'register', component: RegisterComponent },
