@@ -42,11 +42,11 @@ export class RegisterComponent implements OnInit {
   ngOnInit() { }
 
   /** リセット */
-  reset() { }
+  reset() { this.errorDisplay = undefined; }
 
   /** 登録 */
   async onSubmit() {
-    // エラー表示フラグを初期化
+    // エラー表示フラグを非表示
     this.errorDisplay = false;
     /** エラーがある場合はエラーメッセージを設定 */
     if (!this.registerForm.valid) { this.errorDisplay = true; return; }

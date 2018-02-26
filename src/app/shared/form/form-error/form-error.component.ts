@@ -55,6 +55,8 @@ export class FormErrorComponent implements OnInit {
 
   /** エラーメッセージを取得 */
   getErrorMessage() {
+    // エラーがない場合は空文字を返却
+    if (!this.controlDir.errors) { return ''; }
     // 入力必須エラー
     if (this.controlDir.errors.required) { return '入力必須項目です。'; }
     // 知らないエラーの場合はメッセージなし
