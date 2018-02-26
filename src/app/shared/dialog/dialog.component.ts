@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, PLATFORM_ID, Injector } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-dialog',
@@ -39,14 +40,26 @@ export class DialogComponent implements OnInit {
   /** キャンセルボタン表示有無/ラベル */
   cancel = { display: true, label: '' };
 
+  /** モーダル */
+  activeModal: any;
+
   /**
    * コンストラクタ
-   * @param activeModal モデル
+   * @param platformId プラットフォームID
+   * @param injector インジェクタ
    */
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private injector: Injector
+  ) { }
 
   /** 初期処理 */
-  ngOnInit() { }
+  ngOnInit() {
+    // コンストラクタでDIするとサーバサイドでレンダリングする際に
+    // Error: No component factory found for NgbModalBackdrop. Did you add it to @NgModule.entryComponents?
+    // となる為、初期処理時に取得するように修正
+    if (isPlatformBrowser(this.platformId)) { this.activeModal = this.injector.get(NgbActiveModal); }
+  }
 
   /** OKボタンクリック */
   onClickOkey() { this.activeModal.close(true); }

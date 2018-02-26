@@ -1,11 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, Injector } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { DialogComponent } from '../../dialog/dialog.component';
 
 @Injectable()
 export class DialogService {
 
-  constructor(private modalService: NgbModal) { }
+  /**
+   * コンストラクタ
+   * @param injector インジェクタ(SSR対策)
+   */
+  constructor(
+    private injector: Injector
+  ) { }
+
+  /** モーダルサービス */
+  modalService() {
+    // コンストラクタでDIするとサーバサイドでレンダリングする際に
+    // Error: No component factory found for NgbModalBackdrop. Did you add it to @NgModule.entryComponents?
+    // となる為、使用時に取得するように修正
+    return this.injector.get(NgbModal);
+  }
 
   /**
    * 確認ダイアログ
@@ -18,7 +32,7 @@ export class DialogService {
     // タイトルの背景色を設定
     option.windowClass = 'info';
     // ダイアログオープン
-    const modalRef = this.modalService.open(DialogComponent, option);
+    const modalRef = this.modalService().open(DialogComponent, option);
     // タイトルを設定
     modalRef.componentInstance.title = title;
     // メッセージを設定
@@ -43,7 +57,7 @@ export class DialogService {
     // タイトルの背景色を設定
     option.windowClass = 'info';
     // ダイアログオープン
-    const modalRef = this.modalService.open(DialogComponent, option);
+    const modalRef = this.modalService().open(DialogComponent, option);
     // タイトルを設定
     modalRef.componentInstance.title = title;
     // メッセージを設定
@@ -68,7 +82,7 @@ export class DialogService {
     // タイトルの背景色を設定
     option.windowClass = 'alart';
     // ダイアログオープン
-    const modalRef = this.modalService.open(DialogComponent, option);
+    const modalRef = this.modalService().open(DialogComponent, option);
     // タイトルを設定
     modalRef.componentInstance.title = title;
     // メッセージを設定
@@ -93,7 +107,7 @@ export class DialogService {
     // タイトルの背景色を設定
     option.windowClass = 'alart';
     // ダイアログオープン
-    const modalRef = this.modalService.open(DialogComponent, option);
+    const modalRef = this.modalService().open(DialogComponent, option);
     // タイトルを設定
     modalRef.componentInstance.title = title;
     // メッセージを設定

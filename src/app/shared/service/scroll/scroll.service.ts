@@ -30,6 +30,7 @@ export class ScrollService {
    * 一番上へスクロール
    */
   async scrollTop() {
+    // SSR対策
     if (!isPlatformBrowser(this.platformId)) { return; }
     await this.scrollService.scrollTo({ container: document.body } as ScrollToConfigOptions).toPromise();
   }
@@ -39,6 +40,7 @@ export class ScrollService {
    * @param target ターゲットID
    */
   async scrollToTarget(target: string) {
+    // SSR対策
     if (!isPlatformBrowser(this.platformId)) { return; }
     await this.scrollService.scrollTo({ target: target }).toPromise();
   }

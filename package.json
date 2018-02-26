@@ -8,30 +8,39 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:universal": "npm run build:client-and-server-bundles && npm run webpack:server",
+    "serve:universal": "node dist/server.js",
+    "build:client-and-server-bundles": "ng build --prod && ng build --prod --app 1 --output-hashing=false",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^5.2.0",
-    "@angular/common": "^5.2.0",
-    "@angular/compiler": "^5.2.0",
-    "@angular/core": "^5.2.0",
-    "@angular/forms": "^5.2.0",
-    "@angular/http": "^5.2.0",
-    "@angular/platform-browser": "^5.2.0",
-    "@angular/platform-browser-dynamic": "^5.2.0",
-    "@angular/router": "^5.2.0",
+    "@angular/animations": "^5.2.6",
+    "@angular/common": "^5.2.6",
+    "@angular/compiler": "^5.2.6",
+    "@angular/core": "^5.2.6",
+    "@angular/forms": "^5.2.6",
+    "@angular/http": "^5.2.6",
+    "@angular/platform-browser": "^5.2.6",
+    "@angular/platform-browser-dynamic": "^5.2.6",
+    "@angular/platform-server": "^5.2.6",
+    "@angular/router": "^5.2.6",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
+    "@nguniversal/express-engine": "^5.0.0-beta.5",
+    "@nguniversal/module-map-ngfactory-loader": "^5.0.0-beta.5",
     "@nicky-lenaers/ngx-scroll-to": "^0.6.0",
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
+    "express": "^4.16.2",
     "open-iconic": "^1.1.1",
     "rxjs": "^5.5.6",
+    "ts-loader": "^3.1.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
     "@angular/cli": "1.6.8",
-    "@angular/compiler-cli": "^5.2.0",
+    "@angular/compiler-cli": "^5.2.6",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
@@ -47,6 +56,6 @@
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "typescript": "^2.6.2"
   }
 }
